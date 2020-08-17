@@ -1,14 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
-            steps {
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shel steps works too"
-                    ls -lah
-                '''
-            }
+        withAWS(region: 'us-east-2', credentials:'aws-static')  {
+            s3Upload(file:’index.html', bucket: 'arn:aws:s3:::udacity.nanodegree.cloud-devops-engineer.jenkins', path:'index.html')
+
         }
     }
 }
